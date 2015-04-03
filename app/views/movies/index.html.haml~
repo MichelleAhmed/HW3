@@ -21,5 +21,4 @@
     =rating
     = check_box_tag "ratings[#{rating}]",1,checked = @rate_hash.has_key?(rating)
   = submit_tag "Refresh", :id => "ratings_submit"
-
 = link_to 'Add new movie', new_movie_path

@@ -1,8 +1,11 @@
 # This file is app/controllers/movies_controller.rb
 class MoviesController < ApplicationController
-
+  def initialize
+	@all_ratings = Movie.all_ratings
+	super  
+  end
   def index
-    @movies= Movie.all
+    #@mall_ratings = Movie.all_ratings
     if params[:sort]
     	@sorts = params[:sort]
     	session[:sort] = @sorts
