@@ -2,11 +2,11 @@
 class MoviesController < ApplicationController
 
   def index
-    @movies = Movie.all
+    @mall_ratings = Movie.all_ratings
     if params[:sort]
     	@sorts = params[:sort]
     	session[:sort] = @sorts
-	if(@sorted == "release_date")
+	if(@sorts == "release_date")
 		@release_date_header = "hilite"
 	elsif(@sorts == "title")
 		@title_header = "hilite"
@@ -15,8 +15,22 @@ class MoviesController < ApplicationController
 		flash.keep
 		redirect_to params.merge(:sort => session[:sort])	
     end
-end    
-
+    
+    @rate = params[:ratings]
+	if @rate
+		@rate_hash = @rate
+		@rate_array = @rate.keys
+		session[:ratings] = @rate_hash
+	elsif session[:ratings] 
+		flash.keep
+		redirect_to params.merge(:ratings => session[:ratings])
+	  else
+		@rate_hash = {}
+		@r_array = @all_ratings
+      	  end
+		@movies = Movie.find_all_by_rating(@rate_array, :order => session[:sort])
+  end
+		
   def show
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # Look up movie by unique ID

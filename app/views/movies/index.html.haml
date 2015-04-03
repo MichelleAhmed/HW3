@@ -15,11 +15,10 @@
         %td= movie.rating
         %td= movie.release_date
         %td= link_to "More about #{movie.title}", movie_path(movie)
-
+  =form_tag movies_path, :method => :get do
   Include:
-        @all_ratings.each do |rating|
-        =rating
-	= check_box_tag "ratings[#{rating}]",1,checked = @rate_hash.has_key?(rating)
-       = submit_tag "Refresh", :id => "ratings_submit"
-
+    @all_ratings.each do |rating|
+    =rating
+    = check_box_tag "ratings[#{rating}]",1,checked = @rate_hash.has_key?(rating)
+  = submit_tag "Refresh", :id => "ratings_submit"
 = link_to 'Add new movie', new_movie_path
