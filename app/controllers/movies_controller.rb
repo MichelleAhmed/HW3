@@ -1,19 +1,21 @@
 # This file is app/controllers/movies_controller.rb
 class MoviesController < ApplicationController
-	
+
   def index
-    #debugger
-    @all_ratings = Movie.ratings
-   
-    if params[:ratings] 
-      @ratings_filter = params[:ratings].keys  
-      puts "inside else" + @ratings_filter.inspect 
-      puts "inside else" + params[:sort_key].inspect
-      @movies = Movie.order(params[:sort_key]).find_all_by_rating(@ratings_filter)
-    else
-      @movies = Movie.order(params[:sort_key]).find_all
-    end 
-  end
+    @movies = Movie.all
+    if params[:sort]
+    	@sorts = params[:sort]
+    	session[:sort] = @sorts
+	if(@sorted == "release_date")
+		@release_date_header = "hilite"
+	elsif(@sorts == "title")
+		@title_header = "hilite"
+	end
+    elsif session[:sort] && @sorts
+		flash.keep
+		redirect_to params.merge(:sort => session[:sort])	
+    end
+    
 
   def show
     id = params[:id] # retrieve movie ID from URI route

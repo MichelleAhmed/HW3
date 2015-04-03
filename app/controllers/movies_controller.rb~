@@ -1,11 +1,20 @@
 # This file is app/controllers/movies_controller.rb
 class MoviesController < ApplicationController
-	
+
   def index
     @movies = Movie.all
-	@hilite_col = 'hilite'
-	@movies = Movie.order(params[:sort_key]).find_all
-  end
+    if params[:sort]
+    	@sorts = params[:sort]
+    	session[:sort] = @sorts
+	if(@sorted == "release_date")
+		@release_date_header = "hilite"
+	elsif(@sorts == "title")
+		@title_header = "hilite"
+	end
+	elsif session[:sort] && @sorts
+		flash.keep
+		redirect_to params.merge(:sort => session[:sort])	
+  	end
 
   def show
     id = params[:id] # retrieve movie ID from URI route
