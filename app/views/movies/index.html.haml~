@@ -4,11 +4,8 @@
 %table#movies
   %thead
     %tr
-       %th
-        %th{:class => (@hilite_col if params[:sort_key] == "title")}
-        link_to "Movie Title", movie_path(:sort_key =>"title") , :id =>'title_header' 
+      %th Movie Title
       %th Rating
-	
       %th Release Date
       %th More Info
   %tbody
@@ -18,5 +15,11 @@
         %td= movie.rating
         %td= movie.release_date
         %td= link_to "More about #{movie.title}", movie_path(movie)
+
+  Include:
+        @all_ratings.each do |rating|
+        =rating
+	
+       = submit_tag "Refresh", :id => "ratings_submit"
 
 = link_to 'Add new movie', new_movie_path

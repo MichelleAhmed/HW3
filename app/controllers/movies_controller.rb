@@ -15,7 +15,7 @@ class MoviesController < ApplicationController
 		flash.keep
 		redirect_to params.merge(:sort => session[:sort])	
     end
-    
+end    
 
   def show
     id = params[:id] # retrieve movie ID from URI route

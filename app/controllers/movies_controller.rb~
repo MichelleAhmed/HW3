@@ -11,10 +11,11 @@ class MoviesController < ApplicationController
 	elsif(@sorts == "title")
 		@title_header = "hilite"
 	end
-	elsif session[:sort] && @sorts
+    elsif session[:sort] && @sorts
 		flash.keep
 		redirect_to params.merge(:sort => session[:sort])	
-  	end
+    end
+    
 
   def show
     id = params[:id] # retrieve movie ID from URI route
